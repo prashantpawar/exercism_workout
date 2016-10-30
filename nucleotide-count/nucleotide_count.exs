@@ -34,12 +34,7 @@ defmodule NucleotideCount do
   def histogram([head | tail], accumulator) do
 
     {_, hist} = Map.get_and_update(accumulator, head, fn current_value ->
-     case current_value do
-       x when is_integer(x) ->
-         {current_value, current_value + 1}
-       _ ->
-         {current_value, 1}
-     end
+      {current_value, current_value + 1}
     end)
 
     histogram(tail, hist)
