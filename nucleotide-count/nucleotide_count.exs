@@ -28,10 +28,21 @@ defmodule NucleotideCount do
   iex> NucleotideCount.histogram('AATAA')
   %{?A => 4, ?T => 1, ?C => 0, ?G => 0}
   """
-  @spec histogram([char]) :: map
-  def histogram(strand) do
+  @spec histogram([char], map) :: map
+  def histogram(_, accumulator \\ %{?A => 0, ?T => 0, ?C => 0, ?G => 0})
+  def histogram([], accumulator), do: accumulator
+  def histogram([head | tail], accumulator) do
 
-    Enum.map(@nucleotides, fn(x) -> count(strand, x) end)
+    {_, hist} = Map.get_and_update(accumulator, head, fn current_value ->
+     case current_value do
+       x when is_integer(x) ->
+         {current_value, current_value + 1}
+       _ ->
+         {current_value, 1}
+     end
+    end)
+
+    histogram(tail, hist)
 
   end
 end
