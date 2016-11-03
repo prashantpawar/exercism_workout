@@ -6,6 +6,6 @@ defmodule Words do
   """
   @spec count(String.t) :: map
   def count(sentence) do
-
+    sentence |> Regex.scan(~r/\p{L}+/u)
   end
 end
