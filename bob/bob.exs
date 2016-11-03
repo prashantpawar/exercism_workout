@@ -8,7 +8,7 @@ defmodule Bob do
     cond do
       input =~ ~r/^\s*$/u -> @silence
       input =~ ~r/^.*\?$/u -> @question
-      input =~ ~r/^\p{Lu}+\P{Ll}+\p{Lu}*$/u -> @shouting
+      input =~ ~r/^.*\p{Lu}+\P{Ll}+\p{Lu}*$/uU -> @shouting
       true -> @not_recognized
     end
   end
