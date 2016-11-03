@@ -6,9 +6,9 @@ defmodule Bob do
 
   def hey(input) do
     cond do
+      input =~ ~r/^\s*$/u -> @silence
       input =~ ~r/^.*\?$/u -> @question
-      input =~ ~r/^.+\p{^Ll}.*$/u -> @shouting
-      input == "" -> @silence
+      input =~ ~r/^\p{Lu}+\P{Ll}+\p{Lu}*$/u -> @shouting
       true -> @not_recognized
     end
   end
