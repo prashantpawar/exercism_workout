@@ -6,6 +6,9 @@ defmodule Words do
   """
   @spec count(String.t) :: map
   def count(sentence) do
-    sentence |> Regex.scan(~r/\p{L}+/u)
+    Regex.scan(~r/\p{L}+/u, sentence)
+    |> Enum.group_by(fn x -> x end, fn x -> x end) 
+    # |> Enum.map(fn [x] -> x end)
+    # |> Enum.map(&Enum.count/1)
   end
 end
