@@ -6,9 +6,16 @@ defmodule Words do
   """
   @spec count(String.t) :: map
   def count(sentence) do
-    Regex.scan(~r/\p{L}+/u, sentence)
+    word_freq = Regex.scan(~r/[\p{L}\p{N}]+/u, sentence)
+    |> Enum.map(fn [x] -> x end)
     |> Enum.group_by(fn x -> x end, fn x -> x end) 
-    # |> Enum.map(fn [x] -> x end)
-    # |> Enum.map(&Enum.count/1)
+
+    Map.keys(word_freq)
+    |> Enum.reduce(%{}, fn (x, acc) ->
+      Map.put(acc, x,
+        Map.get(word_freq, x)
+        |> Enum.count()
+      )
+    end)
   end
 end
